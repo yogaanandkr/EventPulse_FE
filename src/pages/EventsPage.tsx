@@ -1,8 +1,9 @@
 import { useQuery } from "@apollo/client/react";
 import { ME } from "../graphql/auth";
+import type { MeData } from "../types/auth";
 
 const EventsPage = () => {
-  const { data, loading, error } = useQuery(ME);
+  const { data, loading, error } = useQuery<MeData>(ME);
 
   if (loading) {
     return <p>Loading...</p>;

@@ -1,16 +1,19 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { useMutation } from "@apollo/client/react";
 import { useNavigate } from "react-router-dom";
 
 import { LOGIN } from "../graphql/auth";
-
+import type { LoginData, LoginVariables } from "../types/auth";
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [login, { loading, error }] = useMutation(LOGIN);
+  const [login, { loading, error }] = useMutation<LoginData, LoginVariables>(
+    LOGIN,
+  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
