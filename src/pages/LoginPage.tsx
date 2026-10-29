@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { LOGIN } from "../graphql/auth";
 import type { LoginData, LoginVariables } from "../types/auth";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../hooks/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
