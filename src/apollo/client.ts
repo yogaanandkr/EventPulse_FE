@@ -1,6 +1,7 @@
 import { InMemoryCache } from "@apollo/client";
 import { ApolloClient, HttpLink } from "@apollo/client";
 import { SetContextLink } from "@apollo/client/link/context";
+import { getAccessToken } from "../utils/token";
 
 const httplink = new HttpLink({
   uri: import.meta.env.VITE_GRAPHQL_URL,
@@ -8,7 +9,7 @@ const httplink = new HttpLink({
 });
 
 const authLink = new SetContextLink(prevContext => {
-  const token = localStorage.getItem("accessToken");
+  const token = getAccessToken();
 
   return {
     headers: {

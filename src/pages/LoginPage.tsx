@@ -5,40 +5,45 @@ import { useNavigate } from "react-router-dom";
 
 import { LOGIN } from "../graphql/auth";
 import type { LoginData, LoginVariables } from "../types/auth";
+import { useAuth } from "../context/authContext";
+
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  // Updates global authentication state
+  const { login: setAuthSession } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [login, { loading, error }] = useMutation<LoginData, LoginVariables>(
-    LOGIN,
-  );
+  // Sends login mutation to GraphQL backend
+  const [loginMutation, { loading, error }] = useMutation<
+    LoginData,
+    LoginVariables
+  >(LOGIN);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const { data } = await login({
+      // Step 1: Authenticate with backend
+      const { data } = await loginMutation({
         variables: {
-          input: {
-            email,
-            password,
-          },
+          input: { email, password },
         },
       });
 
-      const accessToken = data?.login?.accessToken;
-
-      if (!accessToken) {
-        return;
+      if (!data?.login) {
+        throw new Error("Login failed");
       }
 
-      localStorage.setItem("accessToken", accessToken);
+      // Step 2: Update AuthContext
+      setAuthSession(data.login.accessToken, data.login.user);
 
-      navigate("/events");
-    } catch {
-      // Error displayed below.
+      // Step 3: Navigate after successful login
+      navigate("/events", { replace: true });
+    } catch (err) {
+      console.error("Login failed:", err);
     }
   };
 
@@ -49,21 +54,21 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
-
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            required
           />
         </div>
 
         <div>
           <label>Password</label>
-
           <input
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
+            required
           />
         </div>
 
