@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import {
   GET_MY_EVENTS,
   PUBLISH_EVENT,
-  CANCEL_EVENT,
+  // CANCEL_EVENT,
 } from "../../graphql/organizer";
 
 interface Props {
@@ -19,9 +19,9 @@ const OrganizerEventCard = ({ event }: Props) => {
     refetchQueries: [{ query: GET_MY_EVENTS }],
   });
 
-  const [cancelEvent, { loading: cancelling }] = useMutation(CANCEL_EVENT, {
-    refetchQueries: [{ query: GET_MY_EVENTS }],
-  });
+  // const [cancelEvent, { loading: cancelling }] = useMutation(CANCEL_EVENT, {
+  //   refetchQueries: [{ query: GET_MY_EVENTS }],
+  // });
 
   const handlePublish = async () => {
     setErrorMessage("");
@@ -37,25 +37,25 @@ const OrganizerEventCard = ({ event }: Props) => {
     }
   };
 
-  const handleCancel = async () => {
-    const confirmed = window.confirm(`Cancel "${event.title}"?`);
+  // const handleCancel = async () => {
+  //   const confirmed = window.confirm(`Cancel "${event.title}"?`);
 
-    if (!confirmed) return;
+  //   if (!confirmed) return;
 
-    setErrorMessage("");
+  //   setErrorMessage("");
 
-    try {
-      await cancelEvent({
-        variables: { id: event.id },
-      });
-    } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : "Unable to cancel event",
-      );
-    }
-  };
+  //   try {
+  //     await cancelEvent({
+  //       variables: { id: event.id },
+  //     });
+  //   } catch (error) {
+  //     setErrorMessage(
+  //       error instanceof Error ? error.message : "Unable to cancel event",
+  //     );
+  //   }
+  // };
 
-  const isBusy = publishing || cancelling;
+  const isBusy = publishing // || cancelling;
 
   return (
     <article className="organizer-event-card">
