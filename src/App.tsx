@@ -8,6 +8,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import EventDetailsPage from "./pages/EventDetailsPage";
 import CreateEventPage from "./pages/CreateEventPage";
 import EditEventPage from "./pages/EditEventPage";
+import TicketManagementPage from "./pages/TicketManagementPage";
+import BookingSummaryPage from "./pages/BookingSummaryPage";
 function App() {
   return (
     <Routes>
@@ -23,6 +25,14 @@ function App() {
         <Route path="/organizer" element={<OrganizerDashboard />} />
         <Route path="/organizer/events/new" element={<CreateEventPage />} />
         <Route path="/organizer/events/:id/edit" element={<EditEventPage />} />
+        <Route
+          path="/organizer/events/:id/tickets"
+          element={<TicketManagementPage />}
+        />
+      </Route>
+
+      <Route element={<ProtectedRoute allowedRoles={["CUSTOMER"]} />}>
+        <Route path="/booking/summary" element={<BookingSummaryPage />} />
       </Route>
     </Routes>
   );

@@ -55,7 +55,7 @@ const OrganizerEventCard = ({ event }: Props) => {
   //   }
   // };
 
-  const isBusy = publishing // || cancelling;
+  const isBusy = publishing; // || cancelling;
 
   return (
     <article className="organizer-event-card">
@@ -77,6 +77,9 @@ const OrganizerEventCard = ({ event }: Props) => {
         <Link to={`/organizer/events/${event.id}/edit`}>Edit Event</Link>
       )}
 
+      {event.status !== "CANCELLED" && (
+        <Link to={`/organizer/events/${event.id}/tickets`}>Manage Tickets</Link>
+      )}
       {errorMessage && <p role="alert">{errorMessage}</p>}
     </article>
   );
