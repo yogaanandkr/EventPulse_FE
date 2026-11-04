@@ -20,11 +20,15 @@ export interface Event {
 
 export interface TicketType {
   id: string;
+  eventId: string;
   name: string;
   description?: string | null;
   price: number;
   currency: string;
+  totalQuantity: number;
   availableQuantity: number;
+  soldQuantity: number;
+  reservedQuantity: number;
   saleStartDate?: string | null;
   saleEndDate?: string | null;
   status: "ACTIVE" | "INACTIVE";

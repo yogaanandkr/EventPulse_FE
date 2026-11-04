@@ -7,6 +7,7 @@ import { apolloClient } from "./apollo/client.ts";
 import { BrowserRouter } from "react-router-dom";
 import "./styles/events.css";
 import { AuthProvider } from "./context/AuthContext.tsx";
+import './styles/tickets.css'
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ApolloProvider client={apolloClient}>
